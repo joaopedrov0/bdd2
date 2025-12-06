@@ -70,12 +70,6 @@ instala as dependencias
 pip install -r requirements.txt
 ```
 
-baixa os dado dos cartao
-
-```
-python feed_db.py
-```
-
 não esquece de criar o .env por favor, eu deixei um exemplo ali (pode ignorar a parte do mongodb por enquanto, eu nao fiz nada com mongodb ainda)
 
 
@@ -85,6 +79,12 @@ Pra ativar:
 
 ```
 docker compose up -d
+```
+
+baixa os dado dos cartao
+
+```
+python feed_db.py
 ```
 
 > o `-d` é pra ele deixar tu digitar no terminal depois (detached)
