@@ -1,0 +1,6 @@
+pra rodar em uma nova maquina voce tem que ter docker permitido pro usuario,
+pra saber se está ok, rode "docker ps" deve rodar sem erros.
+Agora é só colocar o main.py com o .csv na mesma pasta.
+Corrija duas coisas do csv: o nome, e coluna "Class" para "class".
+Agora rode "python3 -m venv .venv", "source .venv/bin/activate"
+Rode
