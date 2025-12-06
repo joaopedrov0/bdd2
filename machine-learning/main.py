@@ -6,8 +6,13 @@ import json
 import logging
 import subprocess
 import tempfile
+import kagglehub
+import shutil
 from pathlib import Path
 from typing import Tuple, Optional
+
+
+
 
 # ---------- Logging ----------
 logging.basicConfig(
@@ -65,7 +70,7 @@ import sqlite3
 from sqlalchemy import create_engine, text
 import mysql.connector
 from pymongo import MongoClient, errors as pymongo_errors
-
+from pymongo.server_api import ServerApi
 # ---------- Configuráveis ----------
 BASE_DIR = Path.cwd()
 DATA_DIR = BASE_DIR / "data"
@@ -85,7 +90,8 @@ MYSQL_DB = "credit_etl_db"
 MYSQL_USER = "root"
 MYSQL_PORT = 3307  # escolha um porto alternativo para evitar conflitos
 
-MONGO_CONTAINER_NAME = "credit_etl_mongo_tmp"
+MONGO_URI = "mongodb+srv://aluno:aluno123@cluster0.8tciwuy.mongodb.net/?appName=Cluster0"
+MONGO_CONTAINER_NAME = "Cluster0"
 MONGO_PORT = 27018  # porto alternativo
 
 AIRFLOW_DAG_FILENAME = BASE_DIR / "airflow_dag_credit_etl.py"
@@ -234,11 +240,12 @@ def ingest_csv_to_mysql(csv_path: Path, table_name="credit_cards"):
 
 # ---------- Mongo setup and ingest ----------
 def get_mongo_client_from_env() -> Optional[MongoClient]:
-    uri = os.environ.get("MONGODB_URI")
+    uri = MONGO_URI
     if not uri:
         return None
     try:
-        client = MongoClient(uri, serverSelectionTimeoutMS=5000)
+        #client = MongoClient(uri, serverSelectionTimeoutMS=5000)
+        client = MongoClient(uri, server_api=ServerApi('1'))
         client.admin.command("ping")
         log.info("Conectado ao MongoDB Atlas via MONGODB_URI.")
         return client
