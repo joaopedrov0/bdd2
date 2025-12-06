@@ -1,0 +1,16 @@
+version: '3' # nao muda, isso aqui define a sintaxe pela versao
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql_bdd2
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # por padrao isso aqui pega o bgl do .env
+      MYSQL_DATABASE: Creditcard
+    ports: 
+      - "3307:3306" # pra garantir que vai ta open
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./db/create_database.sql:/docker-entrypoint-initdb.d/init.sql # copia o script sql pra uma pasta q ele vai executar automatico da primeira vez
+
+    restart: always # se o banco cair ou o server reiniciar o container volta sozinho
