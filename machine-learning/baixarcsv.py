@@ -8,7 +8,7 @@ def main():
     path = kagglehub.dataset_download("mlg-ulb/creditcardfraud")
     print("Dataset baixado em:", path)
 
-    target_filename = "creditcard.csv"
+    target_filename = "credit-card.csv"
     target_path = None
 
     # Procurar arquivo dentro do download
