@@ -8,7 +8,6 @@ $ docker run hello-world
 $ reboot
 
 
-Agora é só colocar o main.py com o .csv na mesma pasta.
-Corrija duas coisas do csv: o nome, e coluna "Class" para "class".
-Agora rode "python3 -m venv .venv", "source .venv/bin/activate"
-Rode
+Rode "python3 -m venv .venv", "source .venv/bin/activate"
+Rode baixarcsv.py
+Rode main.py
