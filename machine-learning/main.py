@@ -176,13 +176,13 @@ def start_mysql_container():
         ], check=True)
         log.info("Container MySQL iniciado. Aguardando inicialização (pode levar ~20s)...")
         # aguardar o MySQL aceitar conexões
-        time.sleep(20)
+        time.sleep(60)
         return True
     except Exception as e:
         log.error("Falha ao criar container MySQL: %s", e)
         return False
 
-def connect_mysql(retries=8, wait=5):
+def connect_mysql(retries=20, wait=25):
     for attempt in range(1, retries+1):
         try:
             conn = mysql.connector.connect(
