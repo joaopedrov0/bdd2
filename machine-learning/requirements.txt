@@ -6,4 +6,3 @@ SQLAlchemy
 scikit-learn
 matplotlib
 kagglehub
-shutil
