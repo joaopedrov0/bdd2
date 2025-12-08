@@ -1,118 +1,154 @@
-# Projeto de banco de dados
+# 💳 Detector de Fraude em Cartões de Crédito
 
-objetivo aq é fazer um pipeline q vai fazer umas parada
+Este projeto implementa um pipeline completo de **download, preparação, treinamento e avaliação** de um modelo de Machine Learning capaz de detectar transações potencialmente fraudulentas em cartões de crédito.
 
-- cria um mysql dentro de um container docker
-- cria uma conexão mongodb via nuvem (mdb atlas)
-
-agora vem a parte divertida
-
-- pega o arquivo `credit-card.csv`
-- quebra ele no meio
-- agora voce tem `credit-card.csv` (original, deixa salvo ai por precauçao), `credit-card1.csv` (primeira metade), `credit-card2.csv` (segunda metade)
-- agora tu vai pegar o `credit-card1.csv` e fazer o banco mysql consumir ele
-- depois tu pega o `credit-card2.csv`, transforma ele em um json e manda pro mongodb
-
-## arquitetura MEDALHÃO (*Medallion Architecture*)
-
-![imaage](https://tse2.mm.bing.net/th/id/OIP.EdxM4AhRbjS_Gs12Tr_RwAHaDk?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3)
-
-### paradas brass (bronze)
-
-- guardar dados como texto (como?)
-
-### paradas silver (prata)
-
-![image](https://tunesambiental.com/wp-content/uploads/imagens-do-dia-mundo-panda-completa-um-ano-kuala-lumpur-23082016-023.jpeg)
-
-- armazenar dados com features relevantes, agregações ou sumarizações no formato pandas dataframe
-
-### paradas gold (ouro)
-
-- armazenar dados em formato de tabelas relacionais (sqlite)
-
+A aplicação foi projetada para ser **simples, direta e reproduzível**, podendo ser executada em qualquer máquina com Python e Docker configurados.
 
 ---
 
-## começando a brincadeira
+## ⚙️ Tecnologias utilizadas
 
-clona o repositorio
+* **Python 3**
+* **Docker** (para ambientes isolados ao rodar pip dentro de containers quando necessário)
+* **Machine Learning:** scikit-learn
+* **Manipulação de dados:** pandas, numpy
+* **Visualização:** matplotlib, seaborn
+* **Logs detalhados** em todas as etapas
+
+---
+
+## 💻 Pré-requisitos
+
+Antes de rodar o projeto em uma nova máquina, siga os passos abaixo.
+
+### ✔️ 1. Verificar se o Docker funciona para o seu usuário
+
+No terminal, execute:
 
 ```
-git clone https://github.com/joaopedrov0/bdd2
+docker ps
 ```
 
-
-entra na pasta
-
-```
-cd bdd2
-```
-
-ignore todos os comandos a frente e use esse:
-
-> se esse comando não funcionar, de autorização de execução pra ele: `chmod +x setup.sh`
+Se **não houver erros**, está tudo pronto.
+Caso apareça erro de permissão, execute:
 
 ```
-sh setup.sh
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
+reboot
 ```
 
+---
 
-entra no venv (comando pra linux abaixo)
+### ✔️ 2. Criar e ativar o ambiente virtual Python
 
-```linux
-source ./venv/bin/activate
+Dentro da pasta do projeto:
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-instala as dependencias
+### ✔️ 3. Baixar as dependências
 
 ```
 pip install -r requirements.txt
 ```
 
-não esquece de criar o .env por favor, eu deixei um exemplo ali (pode ignorar a parte do mongodb por enquanto, eu nao fiz nada com mongodb ainda)
-
-
-## DEPOIS QUE TIVER TUDO PRONTO
-
-Pra ativar:
+### ✔️ 4. Levantar o container docker com o MySQL e alimentar ele com a primeira metade dos dados
 
 ```
-docker compose up -d
-```
-
-baixa os dado dos cartao
-
-```
+docker-compose up -d
 python feed_db.py
 ```
 
-> o `-d` é pra ele deixar tu digitar no terminal depois (detached)
+---
 
-se quiser entrar no container
+### ✔️ 5. Inicializar o algoritmo de Machine Learning
 
-```
-docker exec -it mysql_bdd2 bash
-```
-
-> as letras `i` e `t` são flags de configuração, eu não lembro agora oq cada uma faz individualmente, mas o resultado é um terminal interativo dentro do container `mysql_bdd2` com o bash (terminal) rodando pra ti fazer oq quiser la
-
-quando tiver la dentro vc pode rodar
+Execute o script responsável por baixar e preparar o CSV:
 
 ```
-mysql -u root -p
+deactivate
+cd machine-learning
+python3 -m venv .venv
+source .env/bin/activate
+pip install -r requirements.txt
+python baixarcsv.py
 ```
 
-a senha vc q escolhe (tem que criar o .env)
+Esse passo irá:
 
-pra sair do container
+* Baixar o dataset do Kaggle
+* Renomear colunas quando necessário
+* Salvar **credit-card.csv** na pasta atual
+
+---
+
+### ✔️ 6. Rodar o pipeline completo
+
+Execute:
 
 ```
-exit
+python main.py
 ```
 
-pra derrubar os containers
+O script fará:
+
+* Leitura do arquivo `credit-card.csv`
+* Divisão dos dados (70% treino, 20% validação, 10% teste)
+* Treinamento do modelo
+* Exibição da **matriz de confusão**
+* Visualização de exemplos reais e fraudulentos previstos
+* Geração de logs detalhados para cada etapa
+
+---
+
+## 📊 Sobre o modelo
+
+O projeto utiliza um classificador voltado a problemas de **altamente desbalanceados**, com técnicas de normalização e métricas adequadas, exibindo:
+
+* Acurácia
+* Precisão
+* Recall
+* F1-score
+* Matriz de confusão
+* Exemplos onde o modelo acertou e errou fraudes
+
+---
+
+## 📦 Estrutura do projeto (exemplo sugerido)
 
 ```
-docker compose down
+/
+├── baixarcsv.py
+├── main.py
+├── credit-card.csv
+├── README.md
+└── .venv/
 ```
+
+---
+
+## 🧪 Resultados
+
+O `main.py` mostra na tela:
+
+* Gráficos da matriz de confusão
+* Percentual de detecção de fraudes
+* Exemplos reais comentados:
+
+  * Casos detectados como **FRAUDE**
+  * Casos detectados como **NÃO FRAUDE**
+
+---
+
+## 👥 Autores
+
+* Projeto acadêmico baseado no dataset "Credit Card Fraud Detection"
+* Implementação e adaptação: 
+
+
+---
