@@ -146,9 +146,11 @@ O `main.py` mostra na tela:
 ---
 
 ## 👥 Autores
+- Fabio Vivarelli
+- João Pedro Veríssimo Goncalves
+- João Vitor Gimenes dos Santos
+- Juan Santos Trigo Nasser
+- Nathan Henrique Guimaraes de Oliveira
 
-* Projeto acadêmico baseado no dataset "Credit Card Fraud Detection"
-* Implementação e adaptação: 
-
-
----
+🔗 link documento:
+https://docs.google.com/document/d/1rH32h3iwNiaM5Igdz7zjDOJG6fYtb-NlGOQyRZ_bFNo/edit?usp=sharing
