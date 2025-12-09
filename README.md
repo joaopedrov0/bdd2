@@ -91,6 +91,8 @@ python3 baixarcsv.py
 python3 main.py
 ```
 
+---
+
 ## 👥 Autores
 - Fabio Vivarelli
 - João Pedro Veríssimo Goncalves
