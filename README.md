@@ -1,149 +1,71 @@
-# 💳 Detector de Fraude em Cartões de Crédito
+# 💳 Detector de Fraude em Cartão de Crédito – BDD2
 
-Este projeto implementa um pipeline completo de **download, preparação, treinamento e avaliação** de um modelo de Machine Learning capaz de detectar transações potencialmente fraudulentas em cartões de crédito.
-
-A aplicação foi projetada para ser **simples, direta e reproduzível**, podendo ser executada em qualquer máquina com Python e Docker configurados.
+Aplicação em Python que implementa um pipeline de **engenharia de dados + machine learning** para detectar possíveis fraudes em transações de cartão de crédito.  
+O sistema baixa o dataset, particiona os dados, grava em bancos distintos (MySQL e MongoDB) e treina um modelo de classificação.
 
 ---
 
 ## ⚙️ Tecnologias utilizadas
 
-* **Python 3**
-* **Docker** (para ambientes isolados ao rodar pip dentro de containers quando necessário)
-* **Machine Learning:** scikit-learn
-* **Manipulação de dados:** pandas, numpy
-* **Visualização:** matplotlib, seaborn
-* **Logs detalhados** em todas as etapas
+- **Linguagem:** Python 3
+- **Bancos de dados:** MySQL (Docker), MongoDB Atlas ou local, SQLite
+- **Bibliotecas:** pandas, numpy, scikit-learn, matplotlib
+- **Infra:** Docker, Ubuntu Server (VM da prova)
 
 ---
 
 ## 💻 Pré-requisitos
 
-Antes de rodar o projeto em uma nova máquina, siga os passos abaixo.
-
-### ✔️ 1. Verificar se o Docker funciona para o seu usuário
-
-No terminal, execute:
-
-```
-docker ps
-```
-
-Se **não houver erros**, está tudo pronto.
-Caso apareça erro de permissão, execute:
-
-```
-sudo groupadd docker
-sudo usermod -aG docker $USER
-newgrp docker
-docker run hello-world
-reboot
-```
+- Máquina virtual **Ubuntu Server 25.10 – JCRBDD2-2aProva.ova** ligada e com internet
+- Docker instalado e funcionando para o usuário (`docker ps` sem erro)
+- Python 3 com suporte a `venv`
+- Conta no **Kaggle** (para download do dataset)
+- (Opcional) Conta no **MongoDB Atlas**
 
 ---
 
-### ✔️ 2. Criar e ativar o ambiente virtual Python
+## 📂 Onde rodar
 
-Dentro da pasta do projeto:
+Toda a execução acontece dentro da pasta:
+
+```bash
+cd bdd2/machine-learning
 
 ```
+
+## 🚀 Passo a passo de execução
+
+ - 1. Clonar o repositório
+      
+```bash
+git clone https://github.com/joaopedrov0/bdd2.git
+cd bdd2/machine-learning
+```
+
+- 2. Criar e ativar o ambiente virtual
+     
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### ✔️ 3. Baixar as dependências
-
-```
+- 3. Instalar as dependências
+     
+```bash
 pip install -r requirements.txt
 ```
 
-### ✔️ 4. Levantar o container docker com o MySQL e alimentar ele com a primeira metade dos dados
-
-```
-docker-compose up -d
-python feed_db.py
-```
-
----
-
-### ✔️ 5. Inicializar o algoritmo de Machine Learning
-
-Execute o script responsável por baixar e preparar o CSV:
-
-```
-deactivate
-cd machine-learning
-python3 -m venv .venv
-source .env/bin/activate
-pip install -r requirements.txt
-python baixarcsv.py
+- 4. Baixar e preparar o CSV (Kaggle)
+     
+```bash
+python3 baixarcsv.py
 ```
 
-Esse passo irá:
+- 5. Executar o pipeline completo
 
-* Baixar o dataset do Kaggle
-* Renomear colunas quando necessário
-* Salvar **credit-card.csv** na pasta atual
-
----
-
-### ✔️ 6. Rodar o pipeline completo
-
-Execute:
-
+```bash
+python3 main.py
 ```
-python main.py
-```
-
-O script fará:
-
-* Leitura do arquivo `credit-card.csv`
-* Divisão dos dados (70% treino, 20% validação, 10% teste)
-* Treinamento do modelo
-* Exibição da **matriz de confusão**
-* Visualização de exemplos reais e fraudulentos previstos
-* Geração de logs detalhados para cada etapa
-
----
-
-## 📊 Sobre o modelo
-
-O projeto utiliza um classificador voltado a problemas de **altamente desbalanceados**, com técnicas de normalização e métricas adequadas, exibindo:
-
-* Acurácia
-* Precisão
-* Recall
-* F1-score
-* Matriz de confusão
-* Exemplos onde o modelo acertou e errou fraudes
-
----
-
-## 📦 Estrutura do projeto (exemplo sugerido)
-
-```
-/
-├── baixarcsv.py
-├── main.py
-├── credit-card.csv
-├── README.md
-└── .venv/
-```
-
----
-
-## 🧪 Resultados
-
-O `main.py` mostra na tela:
-
-* Gráficos da matriz de confusão
-* Percentual de detecção de fraudes
-* Exemplos reais comentados:
-
-  * Casos detectados como **FRAUDE**
-  * Casos detectados como **NÃO FRAUDE**
-
----
 
 ## 👥 Autores
 - Fabio Vivarelli
