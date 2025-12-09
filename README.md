@@ -35,33 +35,33 @@ cd bdd2/machine-learning
 
 ## 🚀 Passo a passo de execução
 
- - 1. Clonar o repositório
+ - Clonar o repositório
       
 ```bash
 git clone https://github.com/joaopedrov0/bdd2.git
 cd bdd2/machine-learning
 ```
 
-- 2. Criar e ativar o ambiente virtual
+- Criar e ativar o ambiente virtual
      
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-- 3. Instalar as dependências
+- Instalar as dependências
      
 ```bash
 pip install -r requirements.txt
 ```
 
-- 4. Baixar e preparar o CSV (Kaggle)
+- Baixar e preparar o CSV (Kaggle)
      
 ```bash
 python3 baixarcsv.py
 ```
 
-- 5. Executar o pipeline completo
+- Executar o pipeline completo
 
 ```bash
 python3 main.py
