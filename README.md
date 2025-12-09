@@ -17,12 +17,36 @@ O sistema baixa o dataset, particiona os dados, grava em bancos distintos (MySQL
 ## 💻 Pré-requisitos
 
 - Máquina virtual **Ubuntu Server 25.10 – JCRBDD2-2aProva.ova** ligada e com internet
-- Docker instalado e funcionando para o usuário (`docker ps` sem erro)
+- Docker instalado e funcionando para o usuário
 - Python 3 com suporte a `venv`
 - Conta no **Kaggle** (para download do dataset)
 - (Opcional) Conta no **MongoDB Atlas**
 
 ---
+
+## 🐋 Configuração do Docker
+
+ - Teste se o Docker está funcionando:
+
+```bash
+docker ps
+```
+
+ - Se houver erro, execute:
+   
+```bash
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
+reboot
+```
+
+ - Depois do reboot, teste novamente
+
+```bash
+docker ps
+```
 
 ## 📂 Onde rodar
 
