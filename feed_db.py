@@ -18,7 +18,7 @@ print(f"Total de linhas: {total_linhas}")
 print(f"Parte 1 (MySQL): {len(df_parte1)} linhas")
 print(f"Parte 2 (MongoDB): {len(df_parte2)} linhas")
 
-print("CONECTANDO NO BANCO, SE FALHAR É PQ A SENHA NÃO É 'root' ARQUIVO feed_db.py NA LINHA 23 (troca o segundo 'root' pela sua senha diferentona)")
+#print("CONECTANDO NO BANCO, SE FALHAR É PQ A SENHA NÃO É 'root' ARQUIVO feed_db.py NA LINHA 23 (troca o segundo 'root' pela sua senha diferentona)")
 
 db_connection_str = 'mysql+mysqlconnector://root:root@localhost:3307/Creditcard'
 db_connection = create_engine(db_connection_str)
